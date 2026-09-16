@@ -1,7 +1,5 @@
 # search-agent
 
-## Search Agent
-
 This project implements a generic search assistant using:
 
 - Ollama for local language-model inference
