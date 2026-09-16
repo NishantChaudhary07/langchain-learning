@@ -1,22 +1,21 @@
 [project]
-name = "langchain-learning"
+name = "shopping-agent"
 version = "0.1.0"
-description = "Add your description here"
+description = "LangChain learning and agent experiments"
 readme = "README.md"
-authors = [
-    { name = "Nishant Chaudhary07", email = "nishantchaudhary1204@gmail.com" }
-]
 requires-python = ">=3.12"
+
 dependencies = [
     "black>=26.5.1",
     "isort>=9.0.1",
     "langchain>=1.4.0",
+    "langchain-core>=1.6.3",
     "langchain-ollama>=1.1.0",
     "python-dotenv>=1.2.3",
 ]
 
 [project.scripts]
-langchain-learning = "langchain_learning:main"
+shopping-agent = "shopping_agent.shopping_agent:main"
 
 [build-system]
 requires = ["uv_build>=0.12.10,<0.13.0"]
