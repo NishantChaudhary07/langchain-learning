@@ -1,52 +1,37 @@
-# search-agent
+# Search Agent
 
-This project implements a generic search assistant using:
+A LangChain search assistant that uses a local Ollama model and Tavily web search.
 
-- Ollama for local language-model inference
-- Tavily for web search
-- Pydantic for structured responses
-- LangChain for model and tool integration
+The agent:
 
-The user enters a search query, such as:
+- Searches the web using Tavily
+- Uses Ollama for local language-model inference
+- Returns structured responses using Pydantic
+- Includes an answer and source URLs
+- Uses LangChain's `create_agent` API
 
-- `Top India news headlines`
-- `5 software developer job openings`
-- `Best Python courses for beginners`
-- `Latest developments in artificial intelligence`
+## Technologies
 
-The application searches Tavily, asks the local model to select and summarize the most relevant results, and displays each result with its title, summary, and source URL.
+- Python 3.12+
+- LangChain
+- Ollama
+- Tavily
+- Pydantic
+- uv
 
-## Why the Pipeline Uses This Structure
+## Requirements
 
-Some local Ollama models, including `qwen2.5-coder:7b`, may not reliably support LangChain's native tool-calling format. Instead of returning a structured `tool_calls` field, the model may generate a tool call as plain text or JSON.
+- Python 3.12 or newer
+- [uv](https://docs.astral.sh/uv/)
+- [Ollama](https://ollama.com/)
+- A Tavily API key
 
-For example, the model may produce:
+## Installation
 
-```json
-{
-  "name": "tavily_search",
-  "arguments": {
-    "query": "latest news about India"
-  }
-}
-```
+Install the project dependencies:
 
-This is regular text, not a native tool call. LangChain cannot execute it automatically, so the agent may stop before Tavily is invoked and may return an empty structured response.
-
-Local models can also have limitations with:
-
-Native function and tool calling
-Structured output validation
-Correctly selecting numeric source references
-Returning complete and valid JSON
-Following complex prompts consistently
-To avoid depending on unsupported native tool calling, this project uses an explicit two-step pipeline:
-
-Tavily is invoked directly from Python.
-The search results are numbered and passed to the local model.
-The model returns structured titles, summaries, and source indexes.
-Python maps each source index back to the original Tavily URL.
-This approach is more reliable because the local model is responsible only for selecting and summarizing search results. Python remains responsible for executing the search and attaching the correct source URLs.
+```powershell
+uv sync
 
 Response Structure
 The model returns an intermediate response similar to:
